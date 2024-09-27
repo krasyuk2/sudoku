@@ -9,7 +9,9 @@ node('agent1'){
     stage('Post-to-dockerhub'){
          script {
             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
+                echo "Attempting to push Docker image to Docker Hub
                 app.push("latest")
+                echo "Successfully pushed Docker image to Docker Hub"
         }
     }
     stage('Pull-image-server'){
