@@ -7,8 +7,11 @@ node('agent1'){
         app = docker.build("krasyuk2/sudoku")
     }
     stage('Post-to-dockerhub'){
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
-            app.push("latest")
+         script {
+            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
+                echo "Attempting to push Docker image to Docker Hub"
+                app.push("latest")
+                echo "Successfully pushed Docker image to Docker Hub"
         }
     }
     stage('Pull-image-server'){
