@@ -12,11 +12,13 @@ node('agent1') {
         }
     }
     stage('Check Docker and Docker-Compose') {
-        sh 'docker --version'
-        sh 'docker-compose --version'
+        // Используем 'bat' вместо 'sh' для Windows
+        bat 'docker --version'
+        bat 'docker-compose --version'
     }
     stage('Pull-image-server') {
-        sh 'docker-compose down'
-        sh 'docker-compose up -d'
+        // Используем 'bat' и правильные команды для Windows
+        bat 'docker-compose down'
+        bat 'docker-compose up -d'
     }
 }
