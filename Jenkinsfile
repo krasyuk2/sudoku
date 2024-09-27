@@ -1,19 +1,23 @@
-﻿pipeline{
-    agent any
+pipeline {
+    agent any 
+
     stages {
-        stage('Cloning Git') {
+        stage('Build') {
             steps {
-                checkout scm
+                echo 'Building...'
+                // Ваша команда для сборки
             }
         }
-        stage('SAST') {
+        stage('Test') {
             steps {
-                echo "echo SAST stage"
+                echo 'Testing...'
+                // Ваша команда для тестирования
             }
         }
-        stage('Build-and-Tag') {
+        stage('Deploy') {
             steps {
-                echo "echo Build-and-Tah"
+                echo 'Deploying...'
+                // Ваша команда для развертывания
             }
         }
     }
