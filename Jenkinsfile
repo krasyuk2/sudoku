@@ -1,9 +1,21 @@
 pipeline {
     agent any
     stages {
-        stage('Cloning Git') {
+        stage('Set Docker Context') {
             steps {
-                checkout scm
+                script {
+                    // Убедитесь, что используете правильный контекст
+                    sh 'docker context use default'
+                }
+            }
+        }
+        stage('Docker Login') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
+                        echo "Attempting to log in to Docker Hub"
+                    }
+                }
             }
         }
         stage('Build-and-Tag') {
