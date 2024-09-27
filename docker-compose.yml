@@ -1,0 +1,10 @@
+﻿version: '2'
+services:
+ sudoku-service:
+  image: 'krasyuk2/sudoku:latest'
+  enviroment:
+  - "PORT:3000"
+  ports:
+  - "80:3000"
+  volumes:
+  - ./:/app
