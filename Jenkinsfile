@@ -1,19 +1,34 @@
-node('agent1'){
-    def app
-    stage('Cloning Git') {
-        checkout scm
-    }
-    stage('Build-and-Tag') {
-        app = docker.build("krasyuk2/sudoku")
-    }
-    stage('Post-to-dockerhub'){
-         script {
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
-                app.push("latest")
+pipeline {
+    agent any
+    stages {
+        stage('Cloning Git') {
+            steps {
+                checkout scm
+            }
         }
-    }
-    stage('Pull-image-server'){
-        sh 'docker-compose down'
-        sh 'docker-compose up -d'
+        stage('Build-and-Tag') {
+            steps {
+                script {
+                    def app = docker.build("krasyuk2/sudoku")
+                    echo "Built Docker image: ${app.id}"
+                }
+            }
+        }
+        stage('Post-to-dockerhub') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
+                        app.push("latest")
+                        echo "Pushed Docker image to Docker Hub"
+                    }
+                }
+            }
+        }
+        stage('Pull-image-server') {
+            steps {
+                sh 'docker-compose down'
+                sh 'docker-compose up -d'
+            }
+        }
     }
 }
