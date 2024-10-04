@@ -12,7 +12,7 @@ node('agent1'){
         }
     }
     stage('Pull-image-server'){
-        bat 'docker-compose down'
-        bat 'docker-compose up -d'
+        sh 'docker-compose down'
+        sh 'docker-compose up -d'
     }
 }
